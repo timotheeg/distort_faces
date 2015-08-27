@@ -79,6 +79,8 @@ var
 	scale_slider  = $( "#scale_slider"),
 	radius_slider = $( "#radius_slider");
 
+$(canvas).click(toggleFollowMouse);
+
 // click on image will take snapshot and let it download locally
 downloadLink.click(function() {
 	var image_name = $('#staffer').val();
@@ -113,12 +115,6 @@ radius_slider.slider({
 	max: 250,
 	value: max_radius,
 	slide: setRadius
-});
-
-$(document).keydown(function(evt) {
-	var key = evt.which;
-	if (key === 32) // space
-		toggleFollowMouse();
 });
 
 // set the easing selector
