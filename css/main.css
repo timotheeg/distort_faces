@@ -95,7 +95,15 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+#play {
+    text-align: center;
+}
 
+canvas {
+    margin: auto auto;
+    cursor: none;
+    border: none;
+}
 
 
 
