@@ -12,37 +12,55 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <table id="ui" align="center" cellspacing="10">
+            <tr>
+                <td id="settings" width="533">
+                    <dl>
+                        <dt>Staff</dt>
+                        <dd>
+                            <select id="staffer">
+                                <option value="timothee.jpg">timothee</option>
+                                <option value="tristan.jpg">tristan</option>
+                                <option value="celestine.jpg">celestine</option>
+                            </select>
+                        </dd>
+                        <dt>Scale: <span id="scale_txt" /></dt>
+                        <dd><div id="scale_slider" /></dd>
+                        <dt>Radius: <span id="radius_txt" /></dt>
+                        <dd><div id="radius_slider" /></dd>
+                        <dt>Scale Easing:</dt>
+                        <dd><select id="easing"></select></dd>
+                    </dl>
 
-        <div id="play">
-            <div>
-                <select id="staffer">
-                    <option value="timothee.jpg">timothee</option>
-                    <option value="tristan.jpg">tristan</option>
-                    <option value="celestine.jpg">celestine</option>
-                </select>
-            </div>
-
-            <a id="downloadLnk">
-                <canvas id="stage" width="533" height="800"></canvas>
-            </a>
-        </div>
-
-        <p><strong>Instructions</strong></p>
-        <ol>
-            <li>Only tested and expected to work on google chrome desktop!!</li>
-            <li>Roll over with mouse on image to play with your colleague's face</li>
-            <li>Click to save your creation locally</li>
-            <li>Use query string parameters "scale" (default 2) and "radius" (default 100) to reload the page with different effects</li>
-        <p>
+                    <p>&nbsp;</p>
+                    
+                    <p><strong>Instructions</strong></p>
+                    <ol>
+                        <li>Only tested and expected to work on google chrome desktop!!</li>
+                        <li>Roll over with mouse on image to play with your colleague's face</li>
+                        <li>Press space to freeze a render, press space again to start following mouse again</li>
+                        <li>Click the canva to save your creation locally</li>
+                        <li>Play with the settings above (best if you have frozen rendering first!)</li>
+                    </ol>
+                </td>
+                <td>
+                    <a id="downloadLnk">
+                        <canvas id="stage" width="533" height="800"></canvas>
+                    </a>
+               </td>
+            </tr>
+        </table>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery-ui.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </body>
