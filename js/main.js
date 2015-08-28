@@ -84,10 +84,9 @@ $(canvas).click(toggleFollowMouse);
 // click on image will take snapshot and let it download locally
 downloadLink.click(function() {
 	var image_name = $('#staffer').val();
-	var mime = 'image/' + (/\.jpe?g$/i.test(image_name) ? 'jpeg' : 'png');
 
-	downloadLink.attr('download', image_name);
-	downloadLink.attr('href', canvas.toDataURL(mime));
+	downloadLink.attr('download', image_name.replace(/\.[^.]+$/, '.jpg'));
+	downloadLink.attr('href', canvas.toDataURL('image/jpeg', 0.95));
 });
 
 function setScale() {
@@ -149,10 +148,10 @@ var easings = [
 	'easeInOutSine',
 	'easeInOutCirc',
 	'easeInOutElastic',
-	'easeInOutBounce',
+	'easeInOutBounce'
 ];
 var easing_sel = $('#easing');
-for (var idx = 0; idx<easings.length; idx++) {
+for (var idx = 0; idx < easings.length; idx++) {
 	$(document.createElement('option'))
 		.text(easings[idx])
 		.attr('value', easings[idx])
