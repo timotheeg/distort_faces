@@ -5,6 +5,7 @@ I know it's very juvenile, but boy do I get a kick and laughters out of distorti
 
 
 ## Features
+* Awesome distortion effect that look smooth. It fools your brain so good that if stare t a pic long enough, the original image will feel distorted after a while. Haha!
 * tunables to allow control over the effects (radius, scale, scale easing)
 * 100% client-side code, including "upload" and "download"
 * primitive multi-blob support (keyboard-controlled, works as long as the blob do not overlap)
@@ -25,6 +26,11 @@ The circles are decreasing by one pixels at each layer, but the scale the image 
 The easing funcion that give the best results are  ```linear```, ```swing```, ```easeInSine```.
 
 ## Sample results
+
+![Timothee](/img/sample_results/timothee.jpg?raw=true)
+![Celestine](/img/sample_results/celestine.jpg?raw=true)
+![Tristan](/img/sample_results/tristan.jpg?raw=true)
+![Dinesh](/img/sample_results/dinesh.jpg?raw=true)
 
 
 ## Built with:
