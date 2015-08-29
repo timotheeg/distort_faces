@@ -225,19 +225,19 @@ $(document).keydown(function(evt) {
 	}
 
 	switch(evt.which) {
-		case 27:
+		case 27: // escape - compare with original
 			done();
 			make_stack(true);
 			return;
-		case 13:
+		case 13: // enter - clear blob_stack
 			done();
 			blob_stack = [];
 			break;
-		case 8:
+		case 8: // backspace - remove last blob_stack element
 			done();
 			blob_stack.pop();
 			break;
-		case 32:
+		case 32: // space - make another blob
 			done();
 			blob_stack.push(captureSettings());
 			break;
