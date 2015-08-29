@@ -50,11 +50,13 @@ function captureSettings() {
 }
 
 // this is where the drawing magic happens
-function make_stack() {
+function make_stack(no_stack) {
 	if (!img) return;
 
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // scale 1
+
+	if (no_stack) return;
 
 	blob_stack.concat([captureSettings()]).forEach(function(settings) {
 		console.log(settings);
@@ -217,22 +219,45 @@ $('#file').change(function (evt) {
 
 // set up handler for multiple blobs (experimental)
 $(document).keydown(function(evt) {
-	evt.stopPropagation();
-	evt.preventDefault();
+	function done() {
+		evt.stopPropagation();
+		evt.preventDefault();
+	}
 
 	switch(evt.which) {
+		case 27:
+			done();
+			make_stack(true);
+			return;
 		case 13:
+			done();
 			blob_stack = [];
 			break;
 		case 8:
+			done();
 			blob_stack.pop();
 			break;
 		case 32:
+			done();
 			blob_stack.push(captureSettings());
 			break;
 	}
 
 	make_stack();
+});
+
+$(document).keyup(function(evt) {
+	function done() {
+		evt.stopPropagation();
+		evt.preventDefault();
+	}
+
+	switch(evt.which) {
+		case 27:
+			done();
+			make_stack();
+			return;
+	}
 });
 
 // start on a random person
