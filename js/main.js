@@ -53,8 +53,27 @@ function captureSettings() {
 function make_stack(no_stack) {
 	if (!img) return;
 
+	// images are center-cropped to the canvas
+	var img_ratio = img.width / img.height;
+	var canvas_ratio = canvas.width / canvas.height;
+	var
+		w = canvas.width,
+		h = canvas.height,
+		offset_x = 0,
+		offset_y = 0;
+
+	if (img_ratio > canvas_ratio) {
+		// img width is too long
+		w = canvas.height * img_ratio;
+		offset_x = (canvas.width - w) / 2;
+	}
+	else if (img_ratio < canvas_ratio) {
+		h = canvas.width / img_ratio;
+		offset_y = (canvas.height - h) / 2;
+	}
+
 	ctx.clearRect(0,0, canvas.width, canvas.height);
-	ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // scale 1
+	ctx.drawImage(img, offset_x, offset_y, w, h); // scale 1
 
 	if (no_stack) return;
 
@@ -77,10 +96,10 @@ function make_stack(no_stack) {
 			ctx.arc(settings.x, settings.y, radius, 0, Math.PI * 2);
 			ctx.clip();
 			ctx.drawImage(img
-				, settings.x * (1 - scale)
-				, settings.y * (1 - scale)
-				, canvas.width * scale
-				, canvas.height * scale
+				, settings.x * (1 - scale) + offset_x * scale
+				, settings.y * (1 - scale) + offset_y * scale
+				, w * scale
+				, h * scale
 			);
 			ctx.restore();
 		}
