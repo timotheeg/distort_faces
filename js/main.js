@@ -210,6 +210,11 @@ easing_sel
 		make_stack();
 	});
 
+$('#smoothing').change(function() {
+	ctx.imageSmoothingEnabled = $('#smoothing').is(':checked');
+	make_stack();
+}).prop('checked', !!ctx.imageSmoothingEnabled);
+
 // set up file upload 
 $('#file').change(function (evt) {
 	$('#file_sel_err').text('');
