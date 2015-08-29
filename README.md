@@ -1,19 +1,19 @@
 # Distort Faces
-This is a javascript and html5 implementation of one of my old flash pseudo fish-eye distortion effect. 
+This is a javascript and html5 implementation of my old flash-based pseudo fish-eye distortion effect.
 
-I know it's very juvenile, but boy do I get a kick and laughters out of distorting faces of my family members, friends, and colleagues :D . I hope you enjoy it too :D
+I know it's very juvenile, but boy do I get a kick and laughters out of distorting faces of family members, friends, and colleagues! :D I hope you enjoy it too! :)
 
 
 ## Features
-* Awesome distortion effect that look smooth. It fools your brain so good that if stare t a pic long enough, the original image will feel distorted after a while. Haha!
+* Awesome distortion effect! It fools your brain so good that if stare at a distorted pic long enough, it will fool "feel" natural, and the original image will be the one that feels distorted. Haha!
 * tunables to allow control over the effects (radius, scale, scale easing)
 * 100% client-side code, including "upload" and "download"
-* primitive multi-blob support (keyboard-controlled, works as long as the blob do not overlap)
+* primitive multi-blob support (keyboard-controlled, works as long as blobs do not overlap)
 
 
 ## Demo
 
-Play with [the demo](timotheegroleau.com/fun/distort_faces/) with 3 sample pics of my kids and I to get you started.
+Play with the app [here](http://timotheegroleau.com/fun/distort_faces/). Upload and download your own pics, or play with the 3 sample pics of my kids and I to get you started.
 
 
 ## How it works?
@@ -39,6 +39,12 @@ The easing funcion that give the best results are  ```linear```, ```swing```, ``
 * [jquery-ui](https://jqueryui.com/) for the slider
 * [Penner's easing equations](http://robertpenner.com/easing/) (jquery-ui's implementation) for the scale easing effects
  
+
+## Acknowledgment
+* @zz85 for suggesting making the scale growth obey an easing function
+* Vy Tran for requesting multiple blobs
+* @dineshsaravanan for providing a great sample pic! ;)
+
 
 ## Licence
 
