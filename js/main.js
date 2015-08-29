@@ -78,7 +78,6 @@ function make_stack(no_stack) {
 	if (no_stack) return;
 
 	blob_stack.concat([captureSettings()]).forEach(function(settings) {
-		console.log(settings);
 
 		var
 			easing_func = $.easing[settings.easing],
@@ -86,9 +85,7 @@ function make_stack(no_stack) {
 			end_scale   = settings.max_scale,
 			max_radius  = settings.max_radius;
 
-		console.log(max_radius);
 		for (var radius = max_radius; radius--; ) {
-			console.log(radius);
 			scale = start_scale + (end_scale - start_scale) * easing_func((max_radius - radius + 1) / max_radius);
 
 			ctx.save();
