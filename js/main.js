@@ -10,13 +10,14 @@ var
 	canvas = document.getElementById('stage'),
 	ctx = canvas.getContext('2d'),
 	listening = false, img, img2, last_pos = {x: canvas.width / 2, y: canvas.height / 2},
+	blob_stack = [],
 	file_name;
 
 function reset() {
 	img2 = new Image();
 	img2.onload = function() {
 		img = img2;
-		make_stack(last_pos.x, last_pos.y);
+		make_stack();
 	};
 	file_name = $('#staffer').val();
 	img2.src = 'img/' + file_name;
@@ -35,35 +36,53 @@ function toggleFollowMouse() {
 
 function onMouseMove(evt) {
 	last_pos = getMousePos(canvas, evt);
+	make_stack();
+}
 
-	make_stack(last_pos.x, last_pos.y);
+function captureSettings() {
+	return {
+		x:          last_pos.x,
+		y:          last_pos.y,
+		max_scale:  max_scale,
+		max_radius: max_radius,
+		easing:     easing
+	};
 }
 
 // this is where the drawing magic happens
-function make_stack(mx, my) {
+function make_stack() {
 	if (!img) return;
 
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // scale 1
 
-	var easing_func = $.easing[easing];
-	var start_scale = 1, end_scale = max_scale;
+	blob_stack.concat([captureSettings()]).forEach(function(settings) {
+		console.log(settings);
 
-	for (var radius = max_radius; radius--; ) {
-		scale = start_scale + (end_scale - start_scale) * easing_func((max_radius - radius + 1) / max_radius);
+		var
+			easing_func = $.easing[settings.easing],
+			start_scale = 1,
+			end_scale   = settings.max_scale,
+			max_radius  = settings.max_radius;
 
-		ctx.save();
-		ctx.beginPath();
-		ctx.arc(mx, my, radius, 0, Math.PI * 2);
-		ctx.clip();
-		ctx.drawImage(img
-			, mx * (1 - scale)
-			, my * (1 - scale)
-			, canvas.width * scale
-			, canvas.height * scale
-		);
-		ctx.restore();
-	}
+		console.log(max_radius);
+		for (var radius = max_radius; radius--; ) {
+			console.log(radius);
+			scale = start_scale + (end_scale - start_scale) * easing_func((max_radius - radius + 1) / max_radius);
+
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(settings.x, settings.y, radius, 0, Math.PI * 2);
+			ctx.clip();
+			ctx.drawImage(img
+				, settings.x * (1 - scale)
+				, settings.y * (1 - scale)
+				, canvas.width * scale
+				, canvas.height * scale
+			);
+			ctx.restore();
+		}
+	});
 }
 
 function getMousePos(canvas, evt) {
@@ -98,7 +117,7 @@ pngLink.click(function() {
 function setScale() {
 	max_scale = scale_slider.slider('value');
 	$('#scale_txt').text(max_scale);
-	make_stack(last_pos.x, last_pos.y);
+	make_stack();
 }
 
 scale_slider.slider({
@@ -112,7 +131,7 @@ scale_slider.slider({
 function setRadius() {
 	max_radius = radius_slider.slider('value');
 	$('#radius_txt').text(max_radius);
-	make_stack(last_pos.x, last_pos.y);
+	make_stack();
 }
 
 radius_slider.slider({
@@ -170,10 +189,11 @@ easing_sel
 	.val(easing)
 	.change(function() {
 		easing = easing_sel.val();
-		make_stack(last_pos.x, last_pos.y);
+		make_stack();
 	});
 
-function handleFileSelect(evt) {
+// set up file upload 
+$('#file').change(function (evt) {
 	$('#file_sel_err').text('');
 
 	if (!(evt && evt.target && evt.target.files && evt.target.files[0])) return;
@@ -190,13 +210,30 @@ function handleFileSelect(evt) {
 	reader.onload = function(e) {
 		img = new Image();
 		img.src = e.target.result;
-		make_stack(last_pos.x, last_pos.y);
+		make_stack();
 	};
 	reader.readAsDataURL(selectedFile);
-}
+});
 
-// set up file upload 
-$('#file').change(handleFileSelect);
+// set up handler for multiple blobs (experimental)
+$(document).keydown(function(evt) {
+	evt.stopPropagation();
+	evt.preventDefault();
+
+	switch(evt.which) {
+		case 13:
+			blob_stack = [];
+			break;
+		case 8:
+			blob_stack.pop();
+			break;
+		case 32:
+			blob_stack.push(captureSettings());
+			break;
+	}
+
+	make_stack();
+});
 
 // start on a random person
 var num_staff = staff_sel.find('option').length;
