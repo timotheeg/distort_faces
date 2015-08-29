@@ -23,13 +23,15 @@
             <tr>
                 <td id="settings" width="533">
                     <dl>
-                        <dt>Staff</dt>
+                        <dt>Pic</dt>
                         <dd>
                             <select id="staffer">
                                 <option value="timothee.jpg">timothee</option>
                                 <option value="tristan.jpg">tristan</option>
                                 <option value="celestine.jpg">celestine</option>
-                            </select>
+                            </select><br />
+                            or pick a file:<br />
+                            <input type="file" id="file" name="files" style="display:inline"/> <span id="file_sel_err" />
                         </dd>
                         <dt>Scale: <span id="scale_txt" /></dt>
                         <dd><div id="scale_slider" /></dd>
@@ -39,8 +41,7 @@
                         <dd><select id="easing"></select></dd>
                     </dl>
 
-
-                    <p><a href="#" id="downloadLnk">Download your awesome creation!</a>
+                    <p>Download your awesome creation! <a href="#" id="jpegLnk">as jpeg</a> <a href="#" id="pngLnk">as png</a></p>
 
                     <p>&nbsp;</p>
 

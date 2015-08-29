@@ -9,7 +9,8 @@ var
 	// Grab the Canvas and Drawing Context
 	canvas = document.getElementById('stage'),
 	ctx = canvas.getContext('2d'),
-	listening = false, img, img2, last_pos = {x: canvas.width / 2, y: canvas.height / 2};
+	listening = false, img, img2, last_pos = {x: canvas.width / 2, y: canvas.height / 2},
+	file_name;
 
 function reset() {
 	img2 = new Image();
@@ -17,7 +18,8 @@ function reset() {
 		img = img2;
 		make_stack(last_pos.x, last_pos.y);
 	};
-	img2.src = 'img/' + $('#staffer').val();
+	file_name = $('#staffer').val();
+	img2.src = 'img/' + file_name;
 }
 
 function toggleFollowMouse() {
@@ -75,18 +77,22 @@ function getMousePos(canvas, evt) {
 var staff_sel = $('#staffer').change(reset);
 
 var
-	downloadLink  = $('#downloadLnk'),
-	scale_slider  = $( "#scale_slider"),
-	radius_slider = $( "#radius_slider");
+	jpegLink      = $('#jpegLnk'),
+	pngLink       = $('#pngLnk'),
+	scale_slider  = $('#scale_slider'),
+	radius_slider = $('#radius_slider');
 
 $(canvas).click(toggleFollowMouse);
 
 // click on image will take snapshot and let it download locally
-downloadLink.click(function() {
-	var image_name = $('#staffer').val();
+jpegLink.click(function() {
+	jpegLink.attr('download', file_name.replace(/\.[^.]+$/, '.jpg'));
+	jpegLink.attr('href', canvas.toDataURL('image/jpeg', 0.95));
+});
 
-	downloadLink.attr('download', image_name.replace(/\.[^.]+$/, '.jpg'));
-	downloadLink.attr('href', canvas.toDataURL('image/jpeg', 0.95));
+pngLink.click(function() {
+	pngLink.attr('download', file_name.replace(/\.[^.]+$/, '.png'));
+	pngLink.attr('href', canvas.toDataURL('image/png'));
 });
 
 function setScale() {
@@ -129,7 +135,8 @@ var easings = [
 	'easeInCirc',
 	'easeInElastic',
 	'easeInBounce',
-
+	'easeInBack',
+	'---',
 	'easeOutQuad',
 	'easeOutCubic',
 	'easeOutQuart',
@@ -139,7 +146,8 @@ var easings = [
 	'easeOutCirc',
 	'easeOutElastic',
 	'easeOutBounce',
-
+	'easeOutBack',
+	'---',
 	'easeInOutQuad',
 	'easeInOutCubic',
 	'easeInOutQuart',
@@ -148,7 +156,8 @@ var easings = [
 	'easeInOutSine',
 	'easeInOutCirc',
 	'easeInOutElastic',
-	'easeInOutBounce'
+	'easeInOutBounce',
+	'easeInOutBack'
 ];
 var easing_sel = $('#easing');
 for (var idx = 0; idx < easings.length; idx++) {
@@ -163,6 +172,31 @@ easing_sel
 		easing = easing_sel.val();
 		make_stack(last_pos.x, last_pos.y);
 	});
+
+function handleFileSelect(evt) {
+	$('#file_sel_err').text('');
+
+	if (!(evt && evt.target && evt.target.files && evt.target.files[0])) return;
+
+	var selectedFile = evt.target.files[0];
+	if (!selectedFile.type.match(/^image\//)) {
+		$('#file_sel_err').text('Not an image!');
+		return;
+	}
+
+	file_name = selectedFile.name;
+
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		img = new Image();
+		img.src = e.target.result;
+		make_stack(last_pos.x, last_pos.y);
+	};
+	reader.readAsDataURL(selectedFile);
+}
+
+// set up file upload 
+$('#file').change(handleFileSelect);
 
 // start on a random person
 var num_staff = staff_sel.find('option').length;
