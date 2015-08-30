@@ -95,8 +95,8 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-#play {
-    text-align: center;
+#settings {
+    padding-right: 1em;
 }
 
 canvas {
