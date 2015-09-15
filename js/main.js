@@ -1,5 +1,4 @@
 
-
 var
 	// tunables
 	max_scale  = 2,
@@ -12,6 +11,50 @@ var
 	listening = false, img, img2, last_pos = {x: canvas.width / 2, y: canvas.height / 2},
 	blob_stack = [],
 	file_name;
+
+function start() {
+	if (location.hash) {
+		var img2 = new Image();
+		img2.onload = function() {
+			img = img2;
+			make_stack();
+		};
+		file_name = 'image.jpg';
+		img2.src = location.hash.slice(1);
+	}
+	else {
+		reset();
+	}
+
+	// check params
+	var m;
+
+	if (m = location.search.match(/\bscale=([0-9.]+)/)) {
+		scale_slider.slider('value', parseFloat(m[1]));
+	}
+	if (m = location.search.match(/\bradius=(\d+)/)) {
+		radius_slider.slider('value', parseFloat(m[1]));
+	}
+	if (m = location.search.match(/\beasing=([a-z]+)/i)) {
+		if (easings.indexOf(m[1]) >= 0) {
+			easing = m[1];
+			easing_sel.val(easing);
+		}
+	}
+
+	setScale();
+	setRadius();
+
+	if (m = location.search.match(/\bxy=(\d+)(?:,|%2C)(\d+)/i)) {
+		last_pos = {
+			x: parseInt(m[1], 10),
+			y: parseInt(m[1], 10)
+		};
+	}
+	else {
+		toggleFollowMouse();
+	}
+}
 
 function reset() {
 	img2 = new Image();
@@ -286,8 +329,5 @@ var num_staff = staff_sel.find('option').length;
 staff_sel.get(0).selectedIndex = Math.floor(Math.random() * num_staff);
 
 // start!
-reset();
-setScale();
-setRadius();
-toggleFollowMouse();
+start();
 
