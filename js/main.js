@@ -48,7 +48,7 @@ function start() {
 	if (m = location.search.match(/\bxy=(\d+)(?:,|%2C)(\d+)/i)) {
 		last_pos = {
 			x: parseInt(m[1], 10),
-			y: parseInt(m[1], 10)
+			y: parseInt(m[2], 10)
 		};
 	}
 	else {
