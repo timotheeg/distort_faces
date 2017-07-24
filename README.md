@@ -5,19 +5,17 @@ I know it's very juvenile, but boy do I get a kick and laughters out of distorti
 
 
 ## Features
-* Awesome distortion effect! It fools your brain so good that if stare at a distorted pic long enough, it will fool "feel" natural, and the original image will be the one that feels distorted. Haha!
+* Awesome distortion effect! It fools your brain so good that if stare at a distorted pic long enough, it will "feel" natural, and the original image will be the one that feels distorted (press and hold `ESC` key in the demo page to view the original). Haha!
 * tunables to allow control over the effects (radius, scale, scale easing)
 * 100% client-side code, including "upload" and "download"
 * primitive multi-blob support (keyboard-controlled, works as long as blobs do not overlap)
 
 
 ## Demo
-
 Play with the app [here](http://timotheegroleau.com/fun/distort_faces/). Upload and download your own pics, or play with the 3 sample pics of my kids and I to get you started.
 
 
 ## How it works?
-
 The algorithm is not based on some fancy pixel manipulation, but on a naive "intuitive" implementation instead.
 
 The effect works by drawing concentric circles with diminishing radii on top of each other. In each circle, the pic is drawn again at a different scale. All the pics are drawn centered on the same point, relative to their scale.
@@ -26,7 +24,6 @@ The circles are decreasing by one pixels at each layer, but the scale the image 
 The easing funcion that give the best results are  ```linear```, ```swing```, ```easeInSine```.
 
 ## Sample results
-
 ![Timothee](/img/sample_results/timothee.jpg?raw=true)
 ![Celestine](/img/sample_results/celestine.jpg?raw=true)
 ![Tristan](/img/sample_results/tristan.jpg?raw=true)
@@ -47,7 +44,6 @@ The easing funcion that give the best results are  ```linear```, ```swing```, ``
 
 
 ## Licence
-
 This is distributed under the MIT licence, as follow:
 
 ```
